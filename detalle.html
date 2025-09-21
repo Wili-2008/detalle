@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regalo Especial 💛</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #0f0f2a 50%, #1a0a1a 75%, #0a0a0a 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+      text-align: center;
+      padding-top: 40px;
+      position: relative;
+      transition: all 1s ease-in-out;
+    }
+
+    .fondo-oscuro {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #0f0f2a 50%, #1a0a1a 75%, #0a0a0a 100%);
+      background-size: 400% 400%;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .oculto {
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.8s ease-in-out;
+    }
+
+    .contenido-inicial {
+      transition: all 1s ease-in-out;
+    }
+
+    .contenido-inicial.fade-out {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.9);
+      pointer-events: none;
+    }
+
+    /* Nueva sección con imagen */
+    .seccion-imagen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.5) translateY(50px);
+      transition: all 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+      position: relative;
+    }
+
+    .seccion-imagen.mostrar {
+      display: flex;
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    .imagen-contenedor {
+      width: 400px;
+      height: 400px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 
+        0 25px 60px rgba(0,0,0,0.4),
+        0 10px 30px rgba(255,215,0,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+      border: 3px solid rgba(255,255,255,0.3);
+      animation: flotarImagen 4s ease-in-out infinite;
+      position: relative;
+      backdrop-filter: blur(2px);
+    }
+
+    .imagen-contenedor::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 25px;
+      background: linear-gradient(45deg, transparent, rgba(255,215,0,0.2), transparent);
+      animation: girarHalo 8s linear infinite;
+      z-index: -1;
+    }
+
+    .imagen-contenedor img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 17px;
+    }
+
+    @keyframes flotarImagen {
+      0%, 100% { 
+        transform: translateY(0px) scale(1); 
+        box-shadow: 
+          0 25px 60px rgba(0,0,0,0.4),
+          0 10px 30px rgba(255,215,0,0.2),
+          inset 0 1px 0 rgba(255,255,255,0.2);
+      }
+      50% { 
+        transform: translateY(-10px) scale(1.02); 
+        box-shadow: 
+          0 35px 80px rgba(0,0,0,0.5),
+          0 15px 40px rgba(255,215,0,0.3),
+          inset 0 1px 0 rgba(255,255,255,0.3);
+      }
+    }
+
+    @keyframes girarHalo {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .texto-final {
+      margin-top: 40px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ffd700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 30px rgba(255,215,0,0.5);
+      background: linear-gradient(135deg, 
+        rgba(255,215,0,0.1) 0%, 
+        rgba(255,107,107,0.1) 25%, 
+        rgba(79,172,254,0.1) 50%, 
+        rgba(245,87,108,0.1) 100%);
+      padding: 30px 50px;
+      border-radius: 25px;
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255,215,0,0.4);
+      box-shadow: 
+        0 15px 35px rgba(0,0,0,0.3),
+        0 5px 15px rgba(255,215,0,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+      max-width: 500px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* Fuegos artificiales de fondo con trayectoria detallada */
+    .fuego-fondo {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Proyectil inicial que sube */
+    .proyectil {
+      width: 4px;
+      height: 12px;
+      background: linear-gradient(to top, #ffd700, #ff6b6b);
+      border-radius: 2px 2px 50% 50%;
+      box-shadow: 0 0 10px #ffd700;
+      animation: subir 1.5s ease-out forwards;
+    }
+
+    /* Explosión principal */
+    .explosion {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+    }
+
+    /* Diferentes tipos de chispas */
+    .chispa-dorada {
+      background: radial-gradient(circle, #ffd700 0%, #ffed4e 50%, transparent 100%);
+      box-shadow: 0 0 8px #ffd700, 0 0 15px #ffd700;
+      animation: chispaDorada 2s ease-out forwards;
+    }
+
+    .chispa-roja {
+      background: radial-gradient(circle, #ff6b6b 0%, #ff8e53 50%, transparent 100%);
+      box-shadow: 0 0 8px #ff6b6b, 0 0 15px #ff6b6b;
+      animation: chispaRoja 2.2s ease-out forwards;
+    }
+
+    .chispa-azul {
+      background: radial-gradient(circle, #4facfe 0%, #00f2fe 50%, transparent 100%);
+      box-shadow: 0 0 8px #4facfe, 0 0 15px #4facfe;
+      animation: chispaAzul 2.5s ease-out forwards;
+    }
+
+    .chispa-blanca {
+      background: radial-gradient(circle, #ffffff 0%, #f0f0f0 50%, transparent 100%);
+      box-shadow: 0 0 8px #ffffff, 0 0 15px #ffffff;
+      animation: chispaBlanca 1.8s ease-out forwards;
+    }
+
+    /* Animación del proyectil subiendo */
+    @keyframes subir {
+      0% {
+        transform: translateY(0px);
+        opacity: 1;
+        box-shadow: 0 0 10px #ffd700;
+      }
+      100% {
+        transform: translateY(-250px);
+        opacity: 0;
+        box-shadow: 0 0 5px #ffd700;
+      }
+    }
+
+    /* Animaciones de las chispas con trayectorias diferentes */
+    @keyframes chispaDorada {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+        box-shadow: 0 0 8px #ffd700, 0 0 15px #ffd700;
+      }
+      20% {
+        transform: translate(var(--dx1), var(--dy1)) scale(1.2);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translate(var(--dx2), var(--dy2)) scale(1);
+        opacity: 0.7;
+        box-shadow: 0 0 6px #ffd700, 0 0 12px #ffd700;
+      }
+      80% {
+        transform: translate(var(--dx3), var(--dy3)) scale(0.8);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translate(var(--dx4), var(--dy4)) scale(0.3);
+        opacity: 0;
+        box-shadow: 0 0 2px #ffd700;
+      }
+    }
+
+    @keyframes chispaRoja {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+        box-shadow: 0 0 8px #ff6b6b, 0 0 15px #ff6b6b;
+      }
+      25% {
+        transform: translate(var(--dx1), var(--dy1)) scale(1.3);
+        opacity: 0.9;
+      }
+      60% {
+        transform: translate(var(--dx2), var(--dy2)) scale(1);
+        opacity: 0.6;
+        box-shadow: 0 0 6px #ff6b6b, 0 0 12px #ff6b6b;
+      }
+      85% {
+        transform: translate(var(--dx3), var(--dy3)) scale(0.7);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translate(var(--dx4), var(--dy4)) scale(0.2);
+        opacity: 0;
+        box-shadow: 0 0 2px #ff6b6b;
+      }
+    }
+
+    @keyframes chispaAzul {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+        box-shadow: 0 0 8px #4facfe, 0 0 15px #4facfe;
+      }
+      30% {
+        transform: translate(var(--dx1), var(--dy1)) scale(1.1);
+        opacity: 0.9;
+      }
+      65% {
+        transform: translate(var(--dx2), var(--dy2)) scale(0.9);
+        opacity: 0.5;
+        box-shadow: 0 0 6px #4facfe, 0 0 12px #4facfe;
+      }
+      90% {
+        transform: translate(var(--dx3), var(--dy3)) scale(0.6);
+        opacity: 0.2;
+      }
+      100% {
+        transform: translate(var(--dx4), var(--dy4)) scale(0.1);
+        opacity: 0;
+        box-shadow: 0 0 2px #4facfe;
+      }
+    }
+
+    @keyframes chispaBlanca {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+        box-shadow: 0 0 8px #ffffff, 0 0 15px #ffffff;
+      }
+      15% {
+        transform: translate(var(--dx1), var(--dy1)) scale(1.4);
+        opacity: 1;
+      }
+      40% {
+        transform: translate(var(--dx2), var(--dy2)) scale(1.1);
+        opacity: 0.8;
+        box-shadow: 0 0 6px #ffffff, 0 0 12px #ffffff;
+      }
+      70% {
+        transform: translate(var(--dx3), var(--dy3)) scale(0.8);
+        opacity: 0.5;
+      }
+      100% {
+        transform: translate(var(--dx4), var(--dy4)) scale(0.4);
+        opacity: 0;
+        box-shadow: 0 0 2px #ffffff;
+      }
+    }
+
+    /* Fondo de partículas flotantes mejoradas */
+    .particula {
+      position: absolute;
+      background: radial-gradient(circle, #ffd700, #ffed4e, #ff6b6b);
+      border-radius: 50%;
+      animation: flotar 12s ease-in-out infinite;
+      z-index: 0;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    @keyframes flotar {
+      0% { 
+        transform: translateY(100vh) translateX(0px) rotate(0deg) scale(0.5); 
+        opacity: 0; 
+      }
+      10% { 
+        opacity: 0.8; 
+      }
+      50% { 
+        opacity: 1;
+        transform: translateY(50vh) translateX(50px) rotate(180deg) scale(1);
+      }
+      90% { 
+        opacity: 0.6; 
+      }
+      100% { 
+        transform: translateY(-20vh) translateX(100px) rotate(360deg) scale(0.3); 
+        opacity: 0; 
+      }
+    }
+
+    /* Fuegos artificiales mejorados */
+    .fuego-artificial {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: linear-gradient(45deg, #ffd700, #ff6b6b, #4facfe);
+      border-radius: 50%;
+      animation: explotar 2.5s ease-out infinite;
+      z-index: 1;
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    @keyframes explotar {
+      0% { 
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+        box-shadow: 0 0 20px #ffd700;
+      }
+      30% { 
+        transform: scale(1.5) rotate(90deg);
+        opacity: 1;
+        background: #ff6b6b;
+        box-shadow: 0 0 30px #ff6b6b;
+      }
+      60% { 
+        transform: scale(1) rotate(270deg);
+        opacity: 0.7;
+        background: #4facfe;
+        box-shadow: 0 0 25px #4facfe;
+      }
+      100% { 
+        transform: scale(0.2) rotate(360deg);
+        opacity: 0;
+        box-shadow: 0 0 10px transparent;
+      }
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.3);
+      animation: fadeIn 2s ease-in-out;
+      z-index: 10;
+      position: relative;
+      letter-spacing: 1px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-top: 30px;
+      z-index: 10;
+      position: relative;
+      width: 100%;
+    }
+
+    button {
+      padding: 18px 40px;
+      border: none;
+      border-radius: 30px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2), 0 4px 10px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      backdrop-filter: blur(10px);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.6s ease;
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      transition: all 0.4s ease;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    button:hover::after {
+      width: 300px;
+      height: 300px;
+    }
+
+    button:hover {
+      transform: scale(1.08) translateY(-3px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    button:active {
+      transform: scale(1.02) translateY(-1px);
+      transition: all 0.1s ease;
+    }
+
+    .btn-si { 
+      background: linear-gradient(135deg, #ff6b6b, #ee5a6f, #ff8e53);
+      color: white; 
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    
+    .btn-no { 
+      background: linear-gradient(135deg, #ffd700, #ffed4e, #f0c674);
+      color: #2c3e50; 
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .btn-si:hover {
+      background: linear-gradient(135deg, #ff5252, #d32f2f, #ff7043);
+    }
+
+    .btn-no:hover {
+      background: linear-gradient(135deg, #ffcc02, #ffc107, #ff9800);
+    }
+
+    .mensaje {
+      margin-top: 50px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #fff;
+      min-height: 60px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+      z-index: 10;
+      position: relative;
+      background: rgba(255,255,255,0.1);
+      padding: 20px 35px;
+      border-radius: 25px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .galeria {
+      margin-top: 50px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      width: 90%;
+      max-width: 420px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .foto-placeholder {
+      width: 100%;
+      height: 130px;
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 30%, #ff6b6b 70%, #4facfe 100%);
+      background-size: 400% 400%;
+      animation: shimmerBackground 8s ease-in-out infinite;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 4px 15px rgba(255,215,0,0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    @keyframes shimmerBackground {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .foto-placeholder::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+      animation: shimmer 3s ease-in-out infinite;
+      transform: rotate(45deg);
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .foto-placeholder:hover {
+      transform: scale(1.05) rotate(2deg);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 8px 25px rgba(255,215,0,0.2);
+    }
+
+    #ramo-container {
+      display: none;
+      margin-top: 60px;
+      animation: aparecer 4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      z-index: 10;
+      position: relative;
+    }
+
+    #ramo {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle at 30% 30%, #ffd700 0%, #ffed4e 30%, #ff6b6b 60%, #4facfe 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7rem;
+      box-shadow: 
+        0 25px 60px rgba(255,215,0,0.4),
+        0 10px 30px rgba(255,107,107,0.2),
+        inset 0 -10px 30px rgba(0,0,0,0.1),
+        inset 0 10px 30px rgba(255,255,255,0.2);
+      animation: latirSuave 3s ease-in-out infinite, girarLento 30s linear infinite;
+      position: relative;
+      border: 3px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(2px);
+    }
+
+    #ramo::before {
+      content: '🌻🌻🌻🌻🌻🌻🌻🌻';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3.5rem;
+      animation: flotarFlores 4s ease-in-out infinite;
+      filter: drop-shadow(0 5px 10px rgba(255,215,0,0.3));
+    }
+
+    #ramo::after {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, transparent 60%, rgba(255,215,0,0.1) 70%, transparent 80%);
+      animation: pulsarHalo 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes latirSuave {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes girarLento {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes flotarFlores {
+      0%, 100% { 
+        transform: translateX(-50%) translateY(0px) rotate(0deg); 
+        opacity: 0.9;
+      }
+      50% { 
+        transform: translateX(-50%) translateY(-15px) rotate(5deg); 
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulsarHalo {
+      0%, 100% { 
+        opacity: 0.3; 
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 0.6; 
+        transform: scale(1.1);
+      }
+    }
+
+    @keyframes aparecer {
+      0% { 
+        opacity: 0; 
+        transform: scale(0.2) rotate(-180deg) translateY(50px); 
+        filter: blur(10px);
+      }
+      30% { 
+        opacity: 0.6; 
+        transform: scale(0.8) rotate(-90deg) translateY(20px); 
+        filter: blur(5px);
+      }
+      60% { 
+        opacity: 0.9; 
+        transform: scale(1.1) rotate(0deg) translateY(-10px); 
+        filter: blur(1px);
+      }
+      100% { 
+        opacity: 1; 
+        transform: scale(1) rotate(0deg) translateY(0px); 
+        filter: blur(0px);
+      }
+    }
+
+    .mensaje-especial {
+      margin-top: 40px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: 1.6;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+      background: linear-gradient(135deg, 
+        rgba(255,107,107,0.2) 0%, 
+        rgba(118,75,162,0.2) 25%, 
+        rgba(79,172,254,0.2) 50%, 
+        rgba(245,87,108,0.2) 100%);
+      padding: 30px 45px;
+      border-radius: 30px;
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255,255,255,0.2);
+      animation: brillarTextoSuave 3s ease-in-out infinite;
+      box-shadow: 
+        0 15px 35px rgba(0,0,0,0.1),
+        0 5px 15px rgba(255,215,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mensaje-especial::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(255,215,0,0.1) 40%, 
+        rgba(255,255,255,0.1) 50%, 
+        rgba(255,215,0,0.1) 60%, 
+        transparent 70%);
+      animation: ondaLuz 4s ease-in-out infinite;
+      transform: rotate(45deg);
+    }
+
+    @keyframes brillarTextoSuave {
+      0%, 100% { 
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        border-color: rgba(255,255,255,0.2);
+        box-shadow: 
+          0 15px 35px rgba(0,0,0,0.1),
+          0 5px 15px rgba(255,215,0,0.1),
+          inset 0 1px 0 rgba(255,255,255,0.2);
+      }
+      50% { 
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.6), 0 0 20px rgba(255,215,0,0.3);
+        border-color: rgba(255,215,0,0.4);
+        box-shadow: 
+          0 20px 45px rgba(0,0,0,0.15),
+          0 8px 25px rgba(255,215,0,0.2),
+          inset 0 1px 0 rgba(255,255,255,0.3);
+      }
+    }
+
+    @keyframes ondaLuz {
+      0%, 100% { 
+        transform: translateX(-100%) translateY(-100%) rotate(45deg); 
+        opacity: 0;
+      }
+      50% { 
+        transform: translateX(0%) translateY(0%) rotate(45deg); 
+        opacity: 1;
+      }
+    }
+
+    /* Diseño Responsivo */
+    @media (max-width: 768px) {
+      body {
+        padding-top: 20px;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+      }
+      
+      .btn-container {
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      
+      button {
+        padding: 15px 30px;
+        font-size: 1rem;
+        min-width: 120px;
+      }
+      
+      .mensaje {
+        font-size: 1.1rem;
+        padding: 18px 25px;
+        margin-top: 30px;
+      }
+      
+      .galeria {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+        max-width: 300px;
+        margin-top: 30px;
+      }
+      
+      .foto-placeholder {
+        height: 110px;
+        font-size: 2rem;
+      }
+      
+      #ramo {
+        width: 280px;
+        height: 280px;
+        font-size: 5rem;
+      }
+      
+      #ramo::before {
+        font-size: 2.5rem;
+        top: -25px;
+      }
+      
+      .mensaje-especial {
+        font-size: 1.3rem;
+        padding: 25px 30px;
+        margin-top: 30px;
+      }
+      
+      /* Estilos responsivos para la nueva sección */
+      .imagen-contenedor {
+        width: 300px;
+        height: 300px;
+      }
+      
+      .texto-final {
+        font-size: 1.8rem;
+        padding: 25px 30px;
+        margin-top: 30px;
+        max-width: 350px;
+      }
+      
+      .particula {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .btn-container {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        max-width: 250px;
+      }
+      
+      button {
+        width: 100%;
+        padding: 12px 25px;
+      }
+      
+      .galeria {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        max-width: 250px;
+      }
+      
+      .foto-placeholder {
+        height: 90px;
+        font-size: 1.8rem;
+      }
+      
+      #ramo {
+        width: 220px;
+        height: 220px;
+        font-size: 4rem;
+      }
+      
+      #ramo::before {
+        font-size: 2rem;
+      }
+      
+      .mensaje-especial {
+        font-size: 1.1rem;
+        padding: 20px 25px;
+        line-height: 1.5;
+      }
+      
+      /* Estilos móvil para la nueva sección */
+      .imagen-contenedor {
+        width: 250px;
+        height: 250px;
+      }
+      
+      .texto-final {
+        font-size: 1.5rem;
+        padding: 20px 25px;
+        margin-top: 25px;
+        max-width: 280px;
+        line-height: 1.3;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      h1 {
+        font-size: 3.5rem;
+      }
+      
+      .btn-container {
+        gap: 40px;
+      }
+      
+      button {
+        padding: 20px 50px;
+        font-size: 1.2rem;
+      }
+      
+      #ramo {
+        width: 420px;
+        height: 420px;
+        font-size: 8rem;
+      }
+      
+      #ramo::before {
+        font-size: 4rem;
+      }
+      
+      .mensaje-especial {
+        font-size: 1.8rem;
+        padding: 35px 50px;
+      }
+      
+      /* Estilos para pantallas grandes */
+      .imagen-contenedor {
+        width: 500px;
+        height: 500px;
+      }
+      
+      .texto-final {
+        font-size: 3rem;
+        padding: 40px 60px;
+        margin-top: 50px;
+        max-width: 600px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="contenido-inicial">
+    <h1 id="bienvenida">¡"Bienvenida a este rinconcito que preparé solo para ti" 💛</h1>
+
+    <h1 id="pregunta">“¿Esperabas un detalle mío el día de hoy?"</h1>
+
+    <div class="btn-container">
+      <button class="btn-si" onclick="respuestaSi()">Sí</button>
+      <button class="btn-no" onclick="respuestaNo()">No</button>
+    </div>
+
+    <div class="mensaje" id="mensaje"></div>
+    <!-- Ramo grande de flores amarillas -->
+    <div id="ramo-container">
+      <div id="ramo">🌻</div>
+      <div class="mensaje-especial" id="mensaje-especial">
+        ¡Eres una persona muy especial! 💛<br>
+        Este ramo de girasoles es para alegrar tu día ✨<br>
+        Que siempre brilles como el sol 🌞
+      </div>
+    </div>
+  </div>
+
+  <!-- Nueva sección con imagen -->
+  <div class="seccion-imagen" id="seccion-imagen">
+    <div class="imagen-contenedor">
+      <img src="iamgen_de_un _ramo.png" alt="Ramo especial" id="imagen-ramo">
+    </div>
+    <div class="texto-final" id="texto-final">
+      Viste que valía la pena decir que sí? 😄<br>
+      ¡Aquí tienes este presente para ti! 💛<br>
+      sé que no es mucho, esto no tiene el mismo valor que uno físico<br>
+      es solo un pequeño detalle para recordarte lo especial que eres para mí 🌻
+      algún día tendré la posibilidad de ofrecerte cosas mucho mejores a la altura de lo que mereces.
+      Te Adoro Mucho! 😘
+    </div>
+  </div>
+
+  <script>
+    const mensajesNo = [
+      "¿Segura que no? 🤨",
+      "Mmm... no me convences 🤔", 
+      "Vamos, sé honesta 😇",
+      "Ya pues, decí la verdad",
+      "No te creo nada",
+      "Negarlo no te salva",
+      "¿Otra vez vas a decir que no? 🙄",
+      "cuidadito choca🧐, intenta de nuevo",
+      "te estoy observando...",
+      "vas a ver,  vas a ver, te las estoy contando",
+      "los socialistas nomas dicen que no 😎",
+      "Aunque digas que no… siempre voy a tener algo para ti 💛",
+      "Última oportunidad… ¿sí o no? 🌻"
+    ];
+
+    let indice = 0;
+    const mensajeDiv = document.getElementById("mensaje");
+
+    function respuestaNo() {
+      mensajeDiv.textContent = mensajesNo[indice];
+      mensajeDiv.style.animation = "none";
+      setTimeout(() => {
+        mensajeDiv.style.animation = "fadeIn 0.5s ease-in-out";
+      }, 10);
+      indice = (indice + 1) % mensajesNo.length;
+    }
+
+    function respuestaSi() {
+      // Cambiar a fondo más oscuro
+      document.body.classList.add('fondo-oscuro');
+      
+      // Ocultar todo el contenido inicial
+      const contenidoInicial = document.querySelector('.contenido-inicial');
+      contenidoInicial.classList.add('fade-out');
+      
+      // Crear fuegos artificiales de fondo continuos
+      crearFuegosArtificialesFondo();
+      
+      // Después de la transición, mostrar la nueva sección
+      setTimeout(() => {
+        contenidoInicial.style.display = 'none';
+        const seccionImagen = document.getElementById('seccion-imagen');
+        seccionImagen.classList.add('mostrar');
+      }, 1000);
+    }
+
+    function crearFuegosArtificialesFondo() {
+      // Crear fuegos artificiales detallados cada 4 segundos (menos frecuencia)
+      const intervalFuegos = setInterval(() => {
+        // Solo crear 2-3 fuegos artificiales por vez
+        const numFuegos = Math.random() > 0.5 ? 2 : 3;
+        
+        for(let i = 0; i < numFuegos; i++) {
+          setTimeout(() => {
+            crearFuegoArtificialDetallado();
+          }, i * 1500); // Espaciar más los fuegos artificiales
+        }
+      }, 4000); // Cada 4 segundos en lugar de 2
+      
+      // Guardar el intervalo para poder detenerlo si es necesario
+      window.fuegoInterval = intervalFuegos;
+    }
+
+    function crearFuegoArtificialDetallado() {
+      const contenedor = document.createElement("div");
+      contenedor.className = "fuego-fondo";
+      
+      // Posición aleatoria en la parte inferior para el proyectil
+      const x = Math.random() * 80 + 10; // Entre 10% y 90%
+      const y = 90; // Empezar desde abajo
+      
+      contenedor.style.left = x + "%";
+      contenedor.style.top = y + "%";
+      
+      // Crear proyectil inicial
+      const proyectil = document.createElement("div");
+      proyectil.className = "proyectil";
+      contenedor.appendChild(proyectil);
+      
+      document.body.appendChild(contenedor);
+      
+      // Después de 1.5 segundos (cuando el proyectil llega arriba), crear la explosión
+      setTimeout(() => {
+        if (proyectil.parentNode) {
+          proyectil.remove();
+        }
+        // Asegurar que siempre se cree la explosión
+        if (contenedor.parentNode) {
+          crearExplosion(contenedor);
+        }
+      }, 1500);
+      
+      // Remover todo después de 5 segundos para asegurar limpieza
+      setTimeout(() => {
+        if (contenedor.parentNode) {
+          contenedor.remove();
+        }
+      }, 5000);
+    }
+
+    function crearExplosion(contenedor) {
+      // Verificar que el contenedor aún existe
+      if (!contenedor.parentNode) return;
+      
+      const numChispas = 8; // Reducido de 12 a 8 para mejor rendimiento
+      const tiposChispa = ['chispa-dorada', 'chispa-roja', 'chispa-azul', 'chispa-blanca'];
+      
+      for(let i = 0; i < numChispas; i++) {
+        const chispa = document.createElement("div");
+        chispa.className = `explosion ${tiposChispa[Math.floor(Math.random() * tiposChispa.length)]}`;
+        
+        // Calcular trayectoria única para cada chispa
+        const angulo = (360 / numChispas) * i + Math.random() * 30 - 15; // Ángulo con variación
+        const velocidadBase = Math.random() * 40 + 60; // Velocidad reducida para mejor rendimiento
+        const gravedad = Math.random() * 15 + 25; // Efecto de gravedad reducido
+        
+        // Calcular 4 puntos de la trayectoria parabólica
+        const rad = (angulo * Math.PI) / 180;
+        const dx1 = Math.cos(rad) * velocidadBase * 0.3;
+        const dy1 = Math.sin(rad) * velocidadBase * 0.3 + gravedad * 0.1;
+        
+        const dx2 = Math.cos(rad) * velocidadBase * 0.6;
+        const dy2 = Math.sin(rad) * velocidadBase * 0.6 + gravedad * 0.4;
+        
+        const dx3 = Math.cos(rad) * velocidadBase * 0.8;
+        const dy3 = Math.sin(rad) * velocidadBase * 0.8 + gravedad * 0.7;
+        
+        const dx4 = Math.cos(rad) * velocidadBase;
+        const dy4 = Math.sin(rad) * velocidadBase + gravedad;
+        
+        // Asignar las variables CSS personalizadas para la trayectoria
+        chispa.style.setProperty('--dx1', dx1 + 'px');
+        chispa.style.setProperty('--dy1', dy1 + 'px');
+        chispa.style.setProperty('--dx2', dx2 + 'px');
+        chispa.style.setProperty('--dy2', dy2 + 'px');
+        chispa.style.setProperty('--dx3', dx3 + 'px');
+        chispa.style.setProperty('--dy3', dy3 + 'px');
+        chispa.style.setProperty('--dx4', dx4 + 'px');
+        chispa.style.setProperty('--dy4', dy4 + 'px');
+        
+        // Posicionar la chispa en el centro de la explosión
+        chispa.style.left = '50%';
+        chispa.style.top = '50%';
+        chispa.style.transform = 'translate(-50%, -50%)';
+        
+        contenedor.appendChild(chispa);
+      }
+    }
+
+    function crearFuegosArtificiales() {
+      const numFuegos = window.innerWidth < 768 ? 12 : 25;
+      for(let i = 0; i < numFuegos; i++) {
+        setTimeout(() => {
+          const fuego = document.createElement("div");
+          fuego.className = "fuego-artificial";
+          fuego.style.left = Math.random() * 90 + 5 + "%";
+          fuego.style.top = Math.random() * 80 + 10 + "%";
+          fuego.style.animationDelay = Math.random() * 1.5 + "s";
+          fuego.style.animationDuration = (Math.random() * 1 + 2) + "s";
+          
+          // Colores aleatorios para más variedad
+          const colores = [
+            'linear-gradient(45deg, #ffd700, #ff6b6b)',
+            'linear-gradient(45deg, #4facfe, #00f2fe)',
+            'linear-gradient(45deg, #f093fb, #f5576c)',
+            'linear-gradient(45deg, #ffd700, #ffed4e)'
+          ];
+          fuego.style.background = colores[Math.floor(Math.random() * colores.length)];
+          
+          document.body.appendChild(fuego);
+          
+          setTimeout(() => {
+            if (fuego.parentNode) {
+              fuego.remove();
+            }
+          }, 3000);
+        }, i * 80);
+      }
+    }
+
+    // Crear partículas de fondo mejoradas
+    function crearParticulas() {
+      // Limpiar partículas anteriores
+      const particulasAnteriores = document.querySelectorAll('.particula');
+      particulasAnteriores.forEach(p => p.remove());
+      
+      const numParticulas = window.innerWidth < 768 ? 8 : 15;
+      for(let i = 0; i < numParticulas; i++) {
+        const particula = document.createElement("div");
+        particula.className = "particula";
+        const tamaño = Math.random() * 8 + 4;
+        particula.style.width = tamaño + "px";
+        particula.style.height = tamaño + "px";
+        particula.style.left = Math.random() * 100 + "%";
+        particula.style.animationDelay = Math.random() * 12 + "s";
+        particula.style.animationDuration = (Math.random() * 6 + 10) + "s";
+        
+        // Colores aleatorios más suaves
+        const colores = [
+          'radial-gradient(circle, #ffd700, #ffed4e)',
+          'radial-gradient(circle, #ff6b6b, #ff8e53)',
+          'radial-gradient(circle, #4facfe, #00f2fe)',
+          'radial-gradient(circle, #f093fb, #f5576c)'
+        ];
+        particula.style.background = colores[Math.floor(Math.random() * colores.length)];
+        
+        document.body.appendChild(particula);
+      }
+    }
+
+    // Interacción al hacer clic mejorada
+    document.body.addEventListener("click", (e) => {
+      // Evitar spam de clics
+      if (e.target.tagName === 'BUTTON') return;
+      
+      const emojis = ['💛', '🌻', '✨', '💫', '🌟'];
+      const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+      
+      const elemento = document.createElement("div");
+      elemento.textContent = emoji;
+      elemento.style.position = "absolute";
+      elemento.style.left = e.pageX - 16 + "px";
+      elemento.style.top = e.pageY - 16 + "px";
+      elemento.style.fontSize = (Math.random() * 10 + 24) + "px";
+      elemento.style.animation = "subirMejorado 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards";
+      elemento.style.zIndex = "100";
+      elemento.style.pointerEvents = "none";
+      elemento.style.userSelect = "none";
+      document.body.appendChild(elemento);
+
+      setTimeout(() => elemento.remove(), 2500);
+    });
+
+    // Animación de elementos flotantes mejorada
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes subirMejorado {
+        0% { 
+          transform: translateY(0) scale(0.8) rotate(0deg); 
+          opacity: 1; 
+        }
+        30% { 
+          transform: translateY(-30px) scale(1.2) rotate(10deg); 
+          opacity: 0.9; 
+        }
+        60% { 
+          transform: translateY(-80px) scale(1) rotate(-5deg); 
+          opacity: 0.6; 
+        }
+        100% { 
+          transform: translateY(-150px) scale(0.6) rotate(15deg); 
+          opacity: 0; 
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Inicializar efectos
+    crearParticulas();
+    
+    // Recrear partículas cada 15 segundos
+    setInterval(crearParticulas, 15000);
+  </script>
+</body>
+</html>
